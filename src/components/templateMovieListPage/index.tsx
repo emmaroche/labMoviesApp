@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieList from "../movieList";
-import { MovieListPageTemplateProps} from "../../types/interfaces";
+import {  MovieListPageTemplateProps} from "../../types/interfaces";
 
 const styles = {
   root: {

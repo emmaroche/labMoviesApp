@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import { BaseMovieList, BaseMovie } from "../../types/interfaces";
 
 interface MovieListProps extends BaseMovieList {
-  addToFavourites: (movieId: number) => void;
   selectFavourite: (movieId: number) => void;
 }
 
