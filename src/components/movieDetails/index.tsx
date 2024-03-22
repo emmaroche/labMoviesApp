@@ -25,19 +25,15 @@ const styles = {
         margin: 0.5,
     },
     fab: { 
-        position: "fixed",
-        top: 50,
-        right: 2,
-      },
+      position: "fixed",
+      top: 50,
+      right: 2,
+    },
 };
 
-interface MovieDetailsProps { 
-    movie: MovieT; 
-}
-
-const MovieDetails: React.FC<MovieDetailsProps & { movie: MovieT }> = (props) => {
-    const movie = props.movie;
-    const [drawerOpen, setDrawerOpen] = useState(false);
+const MovieDetails: React.FC<MovieT> = (props) => {
+  const movie=props;
+  const [drawerOpen, setDrawerOpen] = useState(false); // New
 
     return (
         <>
