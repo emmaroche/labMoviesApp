@@ -41,3 +41,9 @@ export interface MovieImage {
   vote_count?: number;
   width?: number;
 }
+
+export interface ListedMovie extends BaseMovie {
+  genre_ids: number[];
+}
+
+export type FilterOption = "title" | "genre";
