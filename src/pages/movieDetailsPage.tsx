@@ -9,11 +9,7 @@ const MovieDetailsPage: React.FC= () => {
   const { id } = useParams();
   const [movie] = useMovie(id ?? "");
 
-<<<<<<< HEAD
-=======
-  
->>>>>>> a9bcf47 (Refactor - useMovie custom hook.)
-  return (
+    return (
     <>
       {movie ? (
         <>
