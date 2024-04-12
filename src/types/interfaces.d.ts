@@ -67,6 +67,14 @@ export interface GenreData {
   }[];
 }
 
+export interface Review {
+  author: string,
+  content: string,
+  agree: boolean,
+  rating: number,
+  movieId: number,
+}
+
 interface DiscoverMovies {
   page: number;	
   total_pages: number;
