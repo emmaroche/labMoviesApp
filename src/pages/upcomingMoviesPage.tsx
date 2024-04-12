@@ -1,8 +1,9 @@
-import React, { useState, useEffect, FC } from "react";  
+import React, { useState, useEffect, FC } from "react";
 import PageTemplate from '../components/templateMovieListPage';
 import { MovieT } from "../types/interfaces";
 import { getUpcomingMovies } from "../api/tmdb-api";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 const styles = {
   root: {
@@ -15,11 +16,11 @@ const styles = {
   },
 };
 
-  const UpcomingPage: FC= () => {
-    const [movies, setMovies] = useState<MovieT[]>([]);
-    const favourites = movies.filter(m => m.favourite)
-    localStorage.setItem('favourites', JSON.stringify(favourites))
-    // New function
+const UpcomingPage: FC = () => {
+  const [movies, setMovies] = useState<MovieT[]>([]);
+  const favourites = movies.filter(m => m.favourite)
+  localStorage.setItem('favourites', JSON.stringify(favourites))
+  // New function
   const addToFavourites = (movieId: number) => {
     const updatedMovies = movies.map((m: MovieT) =>
       m.id === movieId ? { ...m, favourite: true } : m
@@ -34,13 +35,14 @@ const styles = {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-    
-    return (
-      <PageTemplate
+
+  return (
+    <PageTemplate
       title='Discover Upcoming Movies'
       movies={movies}
       action={(movie: MovieT) => {
-        return <AddToFavouritesIcon genre_ids={[]} {...movie} />
+        // return <AddToFavouritesIcon genre_ids={[]} {...movie} />
+       return <PlaylistAddIcon fontSize="large" color="primary" />
       }}
     />
   );
