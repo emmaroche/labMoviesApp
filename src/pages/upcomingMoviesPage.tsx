@@ -1,50 +1,70 @@
-import React, { useState, useEffect, FC } from "react";
+import React from "react";
 import PageTemplate from '../components/templateMovieListPage';
 import { MovieT } from "../types/interfaces";
+import { useQuery } from "react-query"; // Import useQuery
 import { getUpcomingMovies } from "../api/tmdb-api";
-import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import useFiltering from "../hooks/useFiltering";
+import MovieFilterUI, {
+  titleFilter,
+  genreFilter,
+} from "../components/movieFilterUI";
+import Spinner from "../components/spinner";
 
-const styles = {
-  root: {
-    padding: "20px",
-  }, fab: {
-    marginTop: 8,
-    position: "fixed",
-    top: 2,
-    right: 2,
-  },
+const titleFiltering = {
+  name: "title",
+  value: "",
+  condition: titleFilter,
+};
+const genreFiltering = {
+  name: "genre",
+  value: "0",
+  condition: genreFilter,
 };
 
-const UpcomingPage: FC = () => {
-  const [movies, setMovies] = useState<MovieT[]>([]);
-  const favourites = movies.filter(m => m.favourite)
-  localStorage.setItem('favourites', JSON.stringify(favourites))
-  // New function
-  const addToFavourites = (movieId: number) => {
-    const updatedMovies = movies.map((m: MovieT) =>
-      m.id === movieId ? { ...m, favourite: true } : m
-    );
-    setMovies(updatedMovies);
+const UpcomingPage: React.FC = () => {
+  const { data, error, isLoading, isError } = useQuery<MovieT[], Error>("upcomingMovies", getUpcomingMovies);
+  const { filterValues, setFilterValues, filterFunction } = useFiltering(
+    [],
+    [titleFiltering, genreFiltering]
+  );
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
+
+  const changeFilterValues = (type: string, value: string) => {
+    const changedFilter = { name: type, value: value };
+    const updatedFilterSet =
+      type === "title"
+        ? [changedFilter, filterValues[1]]
+        : [filterValues[0], changedFilter];
+    setFilterValues(updatedFilterSet);
   };
 
-  useEffect(() => {
-    getUpcomingMovies().then(movies => {
-      setMovies(movies);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  const movies = data ? data : [];
+  const displayedMovies = filterFunction(movies);
 
   return (
+    <>
     <PageTemplate
       title='Discover Upcoming Movies'
-      movies={movies}
-      action={(movie: MovieT) => {
-        // return <AddToFavouritesIcon genre_ids={[]} {...movie} />
-       return <PlaylistAddIcon fontSize="large" color="primary" />
-      }}
+      movies={displayedMovies}
+      action={(movie: MovieT) => (
+        <PlaylistAddIcon fontSize="large" color="primary" />
+      )}
     />
+    <MovieFilterUI
+    onFilterValuesChange={changeFilterValues}
+    titleFilter={filterValues[0].value}
+    genreFilter={filterValues[1].value}
+  />
+     </>
   );
 };
+
 export default UpcomingPage;
