@@ -1,7 +1,8 @@
 import React, { useState, useEffect, FC } from "react";  
 import PageTemplate from '../components/templateMovieListPage';
-import { ListedMovie } from "../types/interfaces";
+import { MovieT } from "../types/interfaces";
 import { getUpcomingMovies } from "../api/tmdb-api";
+import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
 
 const styles = {
   root: {
@@ -15,12 +16,12 @@ const styles = {
 };
 
   const UpcomingPage: FC= () => {
-    const [movies, setMovies] = useState<ListedMovie[]>([]);
+    const [movies, setMovies] = useState<MovieT[]>([]);
     const favourites = movies.filter(m => m.favourite)
     localStorage.setItem('favourites', JSON.stringify(favourites))
     // New function
   const addToFavourites = (movieId: number) => {
-    const updatedMovies = movies.map((m: ListedMovie) =>
+    const updatedMovies = movies.map((m: MovieT) =>
       m.id === movieId ? { ...m, favourite: true } : m
     );
     setMovies(updatedMovies);
@@ -38,7 +39,9 @@ const styles = {
       <PageTemplate
       title='Discover Upcoming Movies'
       movies={movies}
-      selectFavourite={addToFavourites}
+      action={(movie: MovieT) => {
+        return <AddToFavouritesIcon genre_ids={[]} {...movie} />
+      }}
     />
   );
 };
