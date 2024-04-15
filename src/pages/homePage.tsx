@@ -6,7 +6,7 @@ import MovieFilterUI, {
   titleFilter,
   genreFilter,
 } from "../components/movieFilterUI";
-import { DiscoverMovies, MovieT } from "../types/interfaces";
+import { DiscoverMovies, ListedMovie, MovieT } from "../types/interfaces";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
@@ -60,8 +60,8 @@ const HomePage: React.FC = () => {
       <PageTemplate
         title="Discover Movies"
         movies={displayedMovies}
-        action={(movie: MovieT) => {
-          return <AddToFavouritesIcon genre_ids={[]} {...movie} />
+        action={(movie: ListedMovie) => {
+          return <AddToFavouritesIcon {...movie} />
         }}
       />
       <MovieFilterUI

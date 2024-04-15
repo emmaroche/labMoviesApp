@@ -1,4 +1,4 @@
-import React, { useContext, MouseEvent } from "react";
+import React, { useContext } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,9 +10,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
 import img from '../../images/film-poster-placeholder.png';
-import { BaseMovie, MovieT } from "../../types/interfaces";
 import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
@@ -26,18 +24,13 @@ const styles = {
   },
 };
 
-interface MovieCardProps extends BaseMovie {
-  selectFavourite: (movieId: number) => void;
-} // Add this
-
 interface MovieListProps {
-  movie: MovieT,
-  action: (m: MovieT) => React.ReactNode;
+  movie:ListedMovie,
+  action: (m: ListedMovie) => React.ReactNode;
 }
 
-
 const MovieCard: React.FC<MovieListProps> = (props) => {
-  const movie = { ...props.movie, favourite: false };
+  const movie = {...props.movie, favourite: false};
   const { favourites, addToFavourites } = useContext(MoviesContext);
 
   if (favourites.find((id) => id === movie.id))
