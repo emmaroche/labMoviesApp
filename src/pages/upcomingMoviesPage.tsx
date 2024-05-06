@@ -1,6 +1,6 @@
 import React from "react";
 import PageTemplate from '../components/templateMovieListPage';
-import { MovieT } from "../types/interfaces";
+import { ListedMovie, MovieT } from "../types/interfaces";
 import { useQuery } from "react-query"; // Import useQuery
 import { getUpcomingMovies } from "../api/tmdb-api";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
@@ -10,7 +10,7 @@ import MovieFilterUI, {
   genreFilter,
 } from "../components/movieFilterUI";
 import Spinner from "../components/spinner";
-
+import AddToMustWatchIcon from '../components/cardIcons/addToMustWatch'; 
 const titleFiltering = {
   name: "title",
   value: "",
@@ -54,8 +54,8 @@ const UpcomingPage: React.FC = () => {
     <PageTemplate
       title='Discover Upcoming Movies'
       movies={displayedMovies}
-      action={(movie: MovieT) => (
-        <PlaylistAddIcon fontSize="large" color="primary" />
+      action={(movie: ListedMovie) => (
+        <AddToMustWatchIcon  {...movie} /> // Use the new icon component here
       )}
     />
     <MovieFilterUI

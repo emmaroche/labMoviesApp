@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
 import { ListedMovie } from "../../types/interfaces";
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd'; 
 
 const styles = {
   card: { maxWidth: 345 },
@@ -31,7 +32,7 @@ interface MovieListProps {
 
 const MovieCard: React.FC<MovieListProps> = (props) => {
   const movie = {...props.movie, favourite: false};
-  const { favourites, addToFavourites } = useContext(MoviesContext);
+  const { favourites, addToFavourites, addToMustWatch } = useContext(MoviesContext);
 
   if (favourites.find((id) => id === movie.id))
     movie.favourite = true;
